@@ -53,9 +53,9 @@
       },
       rules: Object,
       items: {
-        type: Object,
+        type: Array,
         default() {
-          return {}
+          return []
         }
       }
     },
