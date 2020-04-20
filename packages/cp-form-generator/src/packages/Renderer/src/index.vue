@@ -142,7 +142,7 @@
       wrapForm(h, children) {
         return h('form',
                  {
-                   staticClass: "el-form wrap-form",
+                   staticClass: "el-form wrap-form wrap-edit-form",
                    class: {
                      ['el-form--label-' + this.labelPosition]: this.labelPosition,
                      'el-form--inline': this.inline
@@ -191,3 +191,14 @@
     }
   }
 </script>
+<style lang="scss">
+.wrap-edit-form{
+  .el-form-item{
+    margin-bottom: 0;
+    margin-right: 0;
+    .el-form-item__content{
+      line-height: 1;
+    }
+  }
+}
+</style>
