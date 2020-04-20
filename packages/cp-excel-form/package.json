@@ -1,8 +1,8 @@
 {
-  "name": "@cci/cp-form-generator",
+  "name": "@cci/cp-excel-form",
   "author": "jackzhang",
   "version": "1.0.3",
-  "description": "表单生成",
+  "description": "excel 表单编辑",
   "main": "index.js",
   "module": "index.js",
   "files": [

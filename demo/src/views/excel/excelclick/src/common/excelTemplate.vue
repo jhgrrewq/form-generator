@@ -11,8 +11,8 @@
   </div>
 </template>
 <script>
-  import ExcelTemplate from 'packages/cp-form-generator'
-  // import ExcelTemplate  from '@cci/cp-form-generator'
+  import ExcelTemplate from 'packages/cp-excel-form'
+  // import ExcelTemplate  from '@cci/cp-excel-form'
 
   export default {
     components: {
