@@ -221,7 +221,7 @@
         const html = new (Vue.extend(Comp))({
           propsData: {
             model: this.model,
-            item
+            items: [item]
           }
         })
         html.$mount()
@@ -248,9 +248,9 @@
           }
 
           // 可添加验证逻辑
-          html.$el.remove()
+          /* html.$el.remove()
 
-          parent.innerHTML = label
+          parent.innerHTML = label */
         }
         // 针对 radio 和 checkbox 没有 blur 事件，监听 mouseout
         if (nonBlurTypes.includes(item.xType)) {

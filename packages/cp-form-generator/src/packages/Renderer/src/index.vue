@@ -1,4 +1,5 @@
 <script>
+  import { Form, FormItem, Row, Col } from '@cci/cui'
   import {
     inputRender,
     textRender,
@@ -11,23 +12,47 @@
   } from './render.js'
 
   export default {
+    components: {
+      FormItem,
+      Row,
+      Col
+    },
     directives: {
       focus: {
         inserted: function(el, binding, vnode) {
+          if (vnode.componentInstance && vnode.componentInstance.elForm) {
+            vnode.componentInstance.elForm.focusItem = vnode.componentInstance
+          }
           setTimeout(function() {
             vnode.componentInstance && vnode.componentInstance.focus && vnode.componentInstance.focus()
           }, 300)
         }
       }
     },
+    mixins: [Form],
+    provide() {
+      return {
+        Form: this
+      }
+    },
     props: {
+      inline: {
+        type: Boolean,
+        default: true
+      },
+      labelWidth: String,
+      labelPosition: {
+        type: String,
+        default: 'right'
+      },
       model: {
         type: Object,
         default() {
           return {}
         }
       },
-      item: {
+      rules: Object,
+      items: {
         type: Object,
         default() {
           return {}
@@ -45,7 +70,22 @@
       this.R.radioRender = radioRender
       this.R.selectRender = selectRender
     },
+    mounted() {
+      this.$on('visible', () => {
+        let componentInstance = this.focusItem
+        if (!componentInstance) {
+          return
+        }
+        setTimeout(function() {
+          componentInstance.focus && componentInstance.focus()
+          componentInstance = null
+        }, 300)
+      })
+    },
     methods: {
+      itemFilters(_item, _$index) {
+        return true
+      },
       baseOptions(item, dataType) {
         const opts = {
           on: {},
@@ -76,6 +116,8 @@
         return opts
       },
       handleChange(item, e) {
+        // element 表单验证空格输入也会通过，因此针对输入字符串去除首尾空格
+        e = typeof e === 'string' ? e.trim() : e
         this.model[item.prop] = e
       },
       mixinEvent(originFn, fn) {
@@ -87,7 +129,28 @@
           return [originFn, fn]
         }
       },
-      renderItem(h, item = this.item) {
+      wrapFormItem(h, { label, prop }, children) {
+        return h("FormItem", {
+          attrs: {
+            label,
+            prop
+          },
+          key: prop,
+          class: "form-item"
+        }, children)
+      },
+      wrapForm(h, children) {
+        return h('form',
+                 {
+                   staticClass: "el-form wrap-form",
+                   class: {
+                     ['el-form--label-' + this.labelPosition]: this.labelPosition,
+                     'el-form--inline': this.inline
+                   }
+                 },
+                 children)
+      },
+      genChild(h, item) {
         const x = item.xType && item.xType.split('.')
         let xType = x && x[0]
         const dataType = x && x[1] || ''
@@ -111,12 +174,20 @@
         if (xType === 'input' || xType === 'select') {
           opts.on['blur'] = this.mixinEvent(opts.on['blur'], () => { this.$emit('blur') })
         }
-
         return fn.call(this, h, item, opts)
+      },
+      renderItems(h, items = this.items) {
+        items = items.filter(this.itemFilters)
+
+        return items
+          .map(this.genChild.bind(this, h))
+          .map((children, i) => {
+            return this.wrapFormItem(h, items[i], children)
+          })
       }
     },
     render(h) {
-      return this.renderItem(h, this.item)
+      return this.wrapForm(h, [this.$slots.default, this.renderItems(h, this.items)])
     }
   }
 </script>
