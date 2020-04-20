@@ -42,6 +42,42 @@ const router = new Router({
         path: '/excel/excelclick/add/:id',
         component: () => import("./src/views/excel/excelclick/src/add"),
         chunkName: 'views/excel/excelclickadd'
+      },
+      {
+        name: 'excelall',
+        meta: {
+          id: 0,
+          pids: [],
+          hideMenu: true,
+          addTag: false
+        },
+        path: '/excel/excelall',
+        component: () => import("./src/views/excel/excelall"),
+        chunkName: 'views/excel/excelall'
+      },
+      {
+        name: 'excelalledit',
+        meta: {
+          id: 0,
+          pids: [],
+          hideMenu: true,
+          addTag: false
+        },
+        path: '/excel/excelall/edit/:id',
+        component: () => import("./src/views/excel/excelall/src/edit"),
+        chunkName: 'views/excel/excelalledit'
+      },
+      {
+        name: 'excelalladd',
+        meta: {
+          id: 0,
+          pids: [],
+          hideMenu: true,
+          addTag: false
+        },
+        path: '/excel/excelall/add/:id',
+        component: () => import("./src/views/excel/excelall/src/add"),
+        chunkName: 'views/excel/excelalladd'
       }
     ]
   }]
