@@ -1,7 +1,7 @@
 <script>
   import Vue from 'vue'
   import axios from 'axios'
-  import Comp from './packages/Form'
+  import Comp from '../packages/Form'
 
   const editTypes = ['input', 'timePick', 'textarea', 'select', 'checkbox', 'radio']
   const nonBlurTypes = ['radio', 'checkbox']

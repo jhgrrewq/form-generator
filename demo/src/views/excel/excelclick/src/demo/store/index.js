@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import { deepClone } from '../utils'
 
-import reportTemplate from 'packages/cp-excel-form'
-// } from '@cci/cp-excel-form'
+import { ExcelClickTemplate as reportTemplate } from 'packages/cp-edit-form'
+// } from '@cci/cp-edit-form'
 
 export const store = Vue.observable({
   activeTabName: "report",

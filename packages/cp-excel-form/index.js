@@ -1,1 +1,7 @@
-export { default } from './src/index'
+import ExcelClickTemplate from './src/template/excelClickTemplate'
+import ExcelAllTemplate from './src/template/excelAllTemplate'
+
+export {
+  ExcelClickTemplate,
+  ExcelAllTemplate
+}
