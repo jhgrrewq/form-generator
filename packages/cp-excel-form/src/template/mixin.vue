@@ -78,20 +78,8 @@
         model: Object.assign({}, defaultModel)
       }
     },
-    watch: {
-      content: {
-        immediate: true,
-        handler: function(val) {
-          this.htmlStr = val
-        }
-      }
-    },
     created() {
       this.items = defaultItems
-    },
-    mounted() {
-      // 外部可对 edit 事件做自定义处理
-      !(this._event && this._event['edit']) && this.$on('edit', this.handleEdit)
     },
     methods: {
       // 获取 html
@@ -230,6 +218,7 @@
 
         function remove(ctx) {
           const value = ctx.model[prop]
+          console.log(html, 'html::::::')
           // 处理回显 label
           let label
           if (optionsTypes.includes(item.xType)) {
@@ -276,7 +265,13 @@
             type = this.handleTimePickType(target)
           }
           const item = this.getTypeConfig(type, props)
-          this.createEditComponent(target, item, target.innerHTML)
+
+          if (this.timer) {
+            clearTimeout(this.timer)
+          }
+          this.timer = setTimeout(() => {
+            this.createEditComponent(target, item, target.innerHTML)
+          }, 50)
         }
       },
       // 点击派发 edit 事件
@@ -286,12 +281,12 @@
     },
     render() {
       return <div class="excel-template" {
-    ...{
-      domProps: {
-        innerHTML: this.htmlStr
-      },
-      ...(this.isEdit ? { on: { click: this.handleClick }} : {})
-    }
+      ...{
+        domProps: {
+          innerHTML: this.htmlStr
+        },
+        ...(this.isEdit ? { on: { click: this.handleClick }} : {})
+      }
     }>
     </div>
     }
