@@ -1,0 +1,13 @@
+/config/
+/node_modules/
+/dist/
+__test__/
+/lib/
+/tmp/
+dist/
+/*.js
+/test/unit/coverage/
+/src/views/
+/src/utils/socket.js
+/public/
+/packages/index.js

@@ -1,0 +1,29 @@
+{
+  "name": "@cci/cp-demo",
+  "author": "hufei",
+  "version": "1.1.39",
+  "description": "An awesome package",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "@cci/cp-button-list": "^1.0.10",
+    "@cci/cp-form": "^1.0.12",
+    "@cci/cp-layout": "^1.1.35",
+    "@cci/cp-search-form": "^1.0.12",
+    "@cci/cp-select-time": "^1.0.6",
+    "@cci/cui": "^1.2.9",
+    "axios": "^0.19.2",
+    "qs": "^6.9.3",
+    "vue-router": "^3.0.2"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^1.9.3"
+  }
+}

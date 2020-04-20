@@ -1,0 +1,14 @@
+{
+  "packages": [
+    "packages/cp-*",
+    "packages/lib-*"
+  ],
+  "command": { 
+    "publish": {
+      "ignoreChanges": ["*.md", "**/test/**"],
+      "message": "chore(release): publish"
+    }
+  },
+  "version": "independent",
+  "npmClient": "yarn"
+}
