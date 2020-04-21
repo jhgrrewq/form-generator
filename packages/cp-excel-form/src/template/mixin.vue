@@ -3,41 +3,6 @@
   import axios from 'axios'
   import Comp from '../packages/Form'
 
-  const editTypes = ['input', 'timePick', 'textarea', 'select', 'checkbox', 'radio']
-  const nonBlurTypes = ['radio', 'checkbox']
-  const optionsTypes = ['select', 'checkbox', 'radio']
-  const arrayTypes = ['checkboxVal']
-
-  const defaultModel = {
-    inputVal: '',
-    textareaVal: '',
-    selectVal: '',
-    radioVal: '',
-    checkboxVal: [],
-    yearVal: '',
-    monthVal: '',
-    weekVal: '',
-    dateVal: '',
-    datetimeVal: ''
-  // datetimerangeVal: [],
-  // daterange: []
-  }
-
-  const defaultItems = [
-    { prop: 'inputVal', placeholder: '请输入输入', xType: 'input', focus: true },
-    { prop: 'textareaVal', placeholder: '请输入输入', xType: 'input', type: 'textarea', focus: true },
-    { prop: 'selectVal', placeholder: '请输入输入', xType: 'select', focus: true },
-    { prop: 'radioVal', placeholder: '请输入输入', xType: 'radio', focus: true },
-    { prop: 'checkboxVal', placeholder: '请输入输入', xType: 'checkbox', focus: true },
-    { prop: 'yearVal', placeholder: '请输入输入', xType: 'SelectTime.year', focus: true },
-    { prop: 'monthVal', placeholder: '请输入输入', xType: 'SelectTime.month', focus: true },
-    { prop: 'weekVal', placeholder: '请输入输入', xType: 'SelectTime.week', focus: true },
-    { prop: 'dateVal', placeholder: '请输入输入', xType: 'SelectTime.date', focus: true },
-    { prop: 'datetimeVal', placeholder: '请输入输入', xType: 'SelectTime.datetime', focus: true }
-  // { prop: 'datetimerangeVal', placeholder: '请输入输入', xType: 'SelectTime.datetimerange', focus: true },
-  // { prop: 'daterange', placeholder: '请输入输入', xType: 'SelectTime.daterange', focus: true }
-  ]
-
   function findLabel(value, options) {
     if (value == null || value === '' || !(options && options.length)) return ''
     const item = options.find(opt => opt.value === value)
@@ -74,12 +39,47 @@
     },
     data() {
       return {
-        htmlStr: '',
-        model: Object.assign({}, defaultModel)
+        htmlStr: ''
       }
     },
     created() {
-      this.items = defaultItems
+      this.editTypes = ['input', 'timePick', 'textarea', 'select', 'checkbox', 'radio']
+      this.optionsTypes = ['select', 'checkbox', 'radio']
+      this.arrayTypes = ['checkboxVal']
+
+      this.defaultModel = {
+        inputVal: '',
+        textareaVal: '',
+        selectVal: '',
+        radioVal: '',
+        checkboxVal: [],
+        yearVal: '',
+        monthVal: '',
+        weekVal: '',
+        dateVal: '',
+        datetimeVal: ''
+        // datetimerangeVal: [],
+        // daterange: []
+      }
+
+      this.defaultItems = [
+        { prop: 'inputVal', placeholder: '请输入输入', xType: 'input', focus: true },
+        { prop: 'textareaVal', placeholder: '请输入输入', xType: 'input', type: 'textarea', focus: true },
+        { prop: 'selectVal', placeholder: '请输入输入', xType: 'select', focus: true },
+        { prop: 'radioVal', placeholder: '请输入输入', xType: 'radio', focus: true },
+        { prop: 'checkboxVal', placeholder: '请输入输入', xType: 'checkbox', focus: true },
+        { prop: 'yearVal', placeholder: '请输入输入', xType: 'SelectTime.year', focus: true },
+        { prop: 'monthVal', placeholder: '请输入输入', xType: 'SelectTime.month', focus: true },
+        { prop: 'weekVal', placeholder: '请输入输入', xType: 'SelectTime.week', focus: true },
+        { prop: 'dateVal', placeholder: '请输入输入', xType: 'SelectTime.date', focus: true },
+        { prop: 'datetimeVal', placeholder: '请输入输入', xType: 'SelectTime.datetime', focus: true }
+        // { prop: 'datetimerangeVal', placeholder: '请输入输入', xType: 'SelectTime.datetimerange', focus: true },
+        // { prop: 'daterange', placeholder: '请输入输入', xType: 'SelectTime.daterange', focus: true }
+      ]
+
+      this.items = this.defaultItems
+
+      this.VueComp = Vue.extend(Comp)
     },
     methods: {
       // 获取 html
@@ -182,17 +182,9 @@
         })
         return item && Object.assign({}, item, props) || {}
       },
-      // handleDefaultModel
-      handleDefaultModel(prop, value) {
-        this.model = Object.assign({}, defaultModel)
-        arrayTypes.forEach(prop => {
-          this.model[prop] = []
-        })
-        this.model[prop] = value
-      },
-      // 处理默认数据
+      // 处理默认 value
       handleDefaultValue(target, item, value) {
-        if (optionsTypes.includes(item.xType)) {
+        if (this.optionsTypes.includes(item.xType)) {
           if (target.hasAttribute('data-option-value')) {
             const optionValue = target.getAttribute('data-option-value')
             value = JSON.parse(optionValue)['optionValue']
@@ -202,19 +194,10 @@
         }
         return value
       },
-      // 处理渲染表单 dom
-      handleFormItemHtml(item) {
-        return new (Vue.extend(Comp))({
-          propsData: {
-            model: this.model,
-            items: [item]
-          }
-        })
-      },
       // 处理 value 对应 label
       handleLabelBaseValue(target, html, item, value) {
         let label
-        if (optionsTypes.includes(item.xType)) {
+        if (this.optionsTypes.includes(item.xType)) {
           if (item.xType === 'checkbox') {
             label = findLabels(value, html.$refs[item.prop].data)
           } else {
@@ -231,46 +214,14 @@
         }
         return label
       },
-      // 渲染表单
-      createEditComponent(parent, item, initValue) {
-        const prop = item.prop
-        if (!item.prop || !item || !this.model) return
-
-        initValue = this.handleDefaultValue(parent, item, initValue)
-
-        this.handleDefaultModel(prop, initValue)
-
-        const html = this.handleFormItemHtml(item)
-        html.$mount()
-        parent.innerHTML = ''
-        parent.appendChild(html.$el)
-
-        function remove(ctx) {
-          const value = ctx.model[prop]
-          // 处理回显 label
-          const label = ctx.handleLabelBaseValue(parent, html, item, value)
-          // 可添加验证逻辑
-          html.$el.remove()
-          parent.innerHTML = label
-        }
-        // 针对 radio 和 checkbox 没有 blur 事件，监听 mouseout
-        if (nonBlurTypes.includes(item.xType)) {
-          const that = this
-          parent && parent.addEventListener('mouseleave', function() {
-            remove(that)
-          }, false)
-        } else {
-          html.$on('blur', () => remove(this))
-        }
-      },
       // 处理 type 和对应 item 项
       handleTypeItem(target) {
         let type = target.getAttribute('data-type')
-        if (!(type && editTypes.includes(type))) return {}
+        if (!(type && this.editTypes.includes(type))) return {}
 
         let props = {}
         // 处理下拉项
-        if (optionsTypes.includes(type)) {
+        if (this.optionsTypes.includes(type)) {
           props = this.handleOptionProp(target)
         }
         if (type === 'timePick') {
@@ -282,35 +233,7 @@
           type,
           item
         }
-      },
-      // 响应 edit 事件，主要出筛选 type 类型，渲染表单
-      handleEdit(target) {
-        const { type, item } = this.handleTypeItem(target)
-
-        if (type && item) {
-          if (this.timer) {
-            clearTimeout(this.timer)
-          }
-          this.timer = setTimeout(() => {
-            this.createEditComponent(target, item, target.innerHTML)
-          }, 50)
-        }
-      },
-      // 点击派发 edit 事件
-      handleClick(e) {
-        this.$emit('edit', e.target, this)
       }
-    },
-    render() {
-      return <div class="excel-template" {
-      ...{
-        domProps: {
-          innerHTML: this.htmlStr
-        },
-        ...(this.isEdit ? { on: { click: this.handleClick }} : {})
-      }
-    }>
-    </div>
     }
   }
 </script>
