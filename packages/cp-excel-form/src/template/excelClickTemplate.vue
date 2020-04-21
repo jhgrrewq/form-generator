@@ -84,6 +84,9 @@
           const value = ctx.model[prop]
           // 处理回显 label
           const label = ctx.handleLabelBaseValue(parent, html, item, value)
+          // 处理 value
+          parent.setAttribute('data-option-value', JSON.stringify({ optionValue: value }))
+
           // 可添加验证逻辑
           html.$el.remove()
           parent.innerHTML = label

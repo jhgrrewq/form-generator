@@ -5,7 +5,6 @@
     data() {
       return {
         model: {},
-        parentDoms: [],
         htmlItems: []
       }
     },
@@ -24,7 +23,29 @@
     methods: {
       // 获取 html
       getHtmlStr() {
-        return this.$el && this.$el.innerHTML // 不能直接返回 htmlStr
+        /* const el = this.$el
+        // 创建fragment对象
+        const fragment = document.createDocumentFragment()
+        //  取出所有子节点并保存到fragment
+        let child
+        while (child = el.firstChild) {
+          if (child.tagName.toLowerCase() === 'table') {
+            const tbody = child.getElementsByTagName('tbody')[0]
+            const elemelem = tbody.children
+            for (let i = 0; i < elemelem.length; i++) {
+              const e = elemelem[i]
+              if (e.children.length) {
+                Array.prototype.map.call(e.children, eItem => {
+                  if (eItem.hasAttribute('data-type')) {
+                    eItem.innerHTML = eItem.getAttribute('data-option-label')
+                  }
+                })
+              }
+            }
+          }
+          fragment.appendChild(child)
+        } */
+        return this.$el && this.$el.innerHTML
       },
       init() {
         let modelIndex = 0
@@ -64,7 +85,10 @@
           propsData: {
             ref: `form_${index}`,
             model: this.model[`model_${index}`],
-            items: [item]
+            items: [item],
+            rules: {
+              [item.prop]: { required: true, message: '请输入', trigger: ['blur', 'change'] }
+            }
           }
         })
       },
@@ -72,9 +96,10 @@
       createEditComponent(parent, item, initValue, modelIndex) {
         const prop = item.prop
         if (!item.prop || !item) return
-
+        // 处理默认 label value
         initValue = this.handleDefaultValue(parent, item, initValue, modelIndex)
-
+        this.handleLabelBaseValue(parent, null, item, initValue)
+        // 处理默认 model
         this.handleDefaultModel(prop, initValue, modelIndex)
 
         const htmlItem = this.handleFormItemHtml(item, modelIndex)
@@ -84,7 +109,10 @@
         parent.appendChild(htmlItem.$el)
 
         htmlItem.$on('value-change', value => {
+          // 处理 label
           this.handleLabelBaseValue(parent, htmlItem, item, value)
+          // 处理 value
+          parent.setAttribute('data-option-value', JSON.stringify({ optionValue: value }))
         })
       },
       // validate

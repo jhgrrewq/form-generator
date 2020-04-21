@@ -192,22 +192,20 @@
       },
       // 处理 value 对应 label
       handleLabelBaseValue(target, html, item, value) {
-        let label
-        if (this.optionsTypes.includes(item.xType)) {
-          if (item.xType === 'checkbox') {
-            label = findLabels(value, html.$refs[item.prop].data)
+        let label = ''
+        if (html) {
+          if (this.optionsTypes.includes(item.xType)) {
+            if (item.xType === 'checkbox') {
+              label = findLabels(value, html.$refs[item.prop].data)
+            } else {
+              label = findLabel(value, html.$refs[item.prop].data)
+            }
           } else {
-            label = findLabel(value, html.$refs[item.prop].data)
+            label = value
           }
-        } else {
-          label = value
         }
-        if (label) {
-          target.setAttribute('data-option-label', label)
-          target.setAttribute('data-option-value', JSON.stringify({
-            optionValue: value
-          }))
-        }
+        target.setAttribute('data-option-label', label)
+
         return label
       },
       // 处理 type 和对应 item 项
