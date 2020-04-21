@@ -84,7 +84,7 @@
     methods: {
       // 获取 html
       getHtmlStr() {
-        return this.htmlStr
+        return this.$el && this.$el.innerHTML // 不能直接返回 htmlStr
       },
       // 获取 json
       getJSON() {
@@ -218,7 +218,6 @@
 
         function remove(ctx) {
           const value = ctx.model[prop]
-          console.log(html, 'html::::::')
           // 处理回显 label
           let label
           if (optionsTypes.includes(item.xType)) {
