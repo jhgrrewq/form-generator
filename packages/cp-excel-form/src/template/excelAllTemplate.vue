@@ -23,29 +23,20 @@
     methods: {
       // 获取 html
       getHtmlStr() {
-        /* const el = this.$el
-        // 创建fragment对象
-        const fragment = document.createDocumentFragment()
-        //  取出所有子节点并保存到fragment
-        let child
-        while (child = el.firstChild) {
-          if (child.tagName.toLowerCase() === 'table') {
-            const tbody = child.getElementsByTagName('tbody')[0]
-            const elemelem = tbody.children
-            for (let i = 0; i < elemelem.length; i++) {
-              const e = elemelem[i]
-              if (e.children.length) {
-                Array.prototype.map.call(e.children, eItem => {
-                  if (eItem.hasAttribute('data-type')) {
-                    eItem.innerHTML = eItem.getAttribute('data-option-label')
-                  }
-                })
+        const el = this.$el.cloneNode(true)
+        const tbody = el.getElementsByTagName('tbody')[0]
+        const elemelem = tbody.children
+        for (let i = 0; i < elemelem.length; i++) {
+          const e = elemelem[i]
+          if (e.children.length) {
+            Array.prototype.map.call(e.children, eItem => {
+              if (eItem.hasAttribute('data-type')) {
+                eItem.innerHTML = eItem.getAttribute('data-option-label') || ''
               }
-            }
+            })
           }
-          fragment.appendChild(child)
-        } */
-        return this.$el && this.$el.innerHTML
+        }
+        return el && el.innerHTML
       },
       init() {
         let modelIndex = 0
@@ -86,6 +77,7 @@
             ref: `form_${index}`,
             model: this.model[`model_${index}`],
             items: [item],
+            inlineMessage: true,
             rules: {
               [item.prop]: { required: true, message: '请输入', trigger: ['blur', 'change'] }
             }

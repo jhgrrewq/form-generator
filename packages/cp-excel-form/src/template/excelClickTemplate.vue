@@ -58,7 +58,8 @@
         return new VueComp({
           propsData: {
             model: this.model,
-            items: [item]
+            items: [item],
+            inlineMessage: true
           }
         })
       },
