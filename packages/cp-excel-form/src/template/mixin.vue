@@ -82,10 +82,6 @@
       this.VueComp = Vue.extend(Comp)
     },
     methods: {
-      // 获取 html
-      getHtmlStr() {
-        return this.$el && this.$el.innerHTML // 不能直接返回 htmlStr
-      },
       // 获取 json
       getJSON() {
         const json = []

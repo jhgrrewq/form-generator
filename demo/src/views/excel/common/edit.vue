@@ -36,6 +36,7 @@
           })
       }, */
       handleSave() {
+        console.log(this)
         if (!this.id) return
         const template = this.$refs.excelTemplate
         const data = template.getJSON()

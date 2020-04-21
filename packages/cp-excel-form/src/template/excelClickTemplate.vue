@@ -25,6 +25,10 @@
       !(this._event && this._event['edit']) && this.$on('edit', this.handleEdit)
     },
     methods: {
+      // 获取 html
+      getHtmlStr() {
+        return this.$el && this.$el.innerHTML // 不能直接返回 htmlStr
+      },
       // 响应 edit 事件，主要出筛选 type 类型，渲染表单
       handleEdit(target) {
         const { type, item } = this.handleTypeItem(target)

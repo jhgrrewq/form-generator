@@ -22,6 +22,10 @@
       })
     },
     methods: {
+      // 获取 html
+      getHtmlStr() {
+        return this.$el && this.$el.innerHTML // 不能直接返回 htmlStr
+      },
       init() {
         let modelIndex = 0
         const tbody = this.$el.getElementsByTagName('tbody')[0]
@@ -58,6 +62,7 @@
         const VueComp = this.VueComp
         return new VueComp({
           propsData: {
+            ref: `form_${index}`,
             model: this.model[`model_${index}`],
             items: [item]
           }
@@ -72,13 +77,28 @@
 
         this.handleDefaultModel(prop, initValue, modelIndex)
 
-        const html = this.handleFormItemHtml(item, modelIndex)
-        html.$mount()
+        const htmlItem = this.handleFormItemHtml(item, modelIndex)
+        this.htmlItems.push(htmlItem)
+        htmlItem.$mount()
         parent.innerHTML = ''
-        parent.appendChild(html.$el)
+        parent.appendChild(htmlItem.$el)
 
-        html.$on('value-change', value => {
-          this.handleLabelBaseValue(parent, html, item, value)
+        htmlItem.$on('value-change', value => {
+          this.handleLabelBaseValue(parent, htmlItem, item, value)
+        })
+      },
+      // validate
+      validate() {
+        if (!this.htmlItems.length) return
+        return Promise.all(this.htmlItems.map(form => form.validate()))
+          .then(validate => {
+            return validate
+          })
+      },
+      clearValidate() {
+        if (!this.htmlItems.length) return
+        this.htmlItems.forEach(form => {
+          form.clearValidate()
         })
       }
     },
