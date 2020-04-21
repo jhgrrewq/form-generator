@@ -183,35 +183,64 @@
         return item && Object.assign({}, item, props) || {}
       },
       // handleDefaultModel
-      handleDefaultModel() {
+      handleDefaultModel(prop, value) {
         this.model = Object.assign({}, defaultModel)
         arrayTypes.forEach(prop => {
           this.model[prop] = []
         })
+        this.model[prop] = value
       },
-      // 渲染表单
-      createEditComponent(parent, item, initValue) {
-        const prop = item.prop
-        if (!prop || !item || !this.model) return
-
+      // 处理默认数据
+      handleDefaultValue(target, item, value) {
         if (optionsTypes.includes(item.xType)) {
-          if (parent.hasAttribute('data-option-value')) {
-            const optionValue = parent.getAttribute('data-option-value')
-            initValue = JSON.parse(optionValue)['optionValue']
+          if (target.hasAttribute('data-option-value')) {
+            const optionValue = target.getAttribute('data-option-value')
+            value = JSON.parse(optionValue)['optionValue']
           } else {
-            initValue = item.xType === 'checkbox' ? [] : ''
+            value = item.xType === 'checkbox' ? [] : ''
           }
         }
-
-        this.handleDefaultModel()
-        this.model[prop] = initValue
-
-        const html = new (Vue.extend(Comp))({
+        return value
+      },
+      // 处理渲染表单 dom
+      handleFormItemHtml(item) {
+        return new (Vue.extend(Comp))({
           propsData: {
             model: this.model,
             items: [item]
           }
         })
+      },
+      // 处理 value 对应 label
+      handleLabelBaseValue(target, html, item, value) {
+        let label
+        if (optionsTypes.includes(item.xType)) {
+          if (item.xType === 'checkbox') {
+            label = findLabels(value, html.$refs[item.prop].data)
+          } else {
+            label = findLabel(value, html.$refs[item.prop].data)
+          }
+        } else {
+          label = value
+        }
+        if (label) {
+          target.setAttribute('data-option-label', label)
+          target.setAttribute('data-option-value', JSON.stringify({
+            optionValue: value
+          }))
+        }
+        return label
+      },
+      // 渲染表单
+      createEditComponent(parent, item, initValue) {
+        const prop = item.prop
+        if (!item.prop || !item || !this.model) return
+
+        initValue = this.handleDefaultValue(parent, item, initValue)
+
+        this.handleDefaultModel(prop, initValue)
+
+        const html = this.handleFormItemHtml(item)
         html.$mount()
         parent.innerHTML = ''
         parent.appendChild(html.$el)
@@ -219,25 +248,9 @@
         function remove(ctx) {
           const value = ctx.model[prop]
           // 处理回显 label
-          let label
-          if (optionsTypes.includes(item.xType)) {
-            if (item.xType === 'checkbox') {
-              label = findLabels(value, html.$refs[prop].data)
-            } else {
-              label = findLabel(value, html.$refs[prop].data)
-            }
-          } else {
-            label = value
-          }
-          if (label) {
-            parent.setAttribute('data-option-value', JSON.stringify({
-              optionValue: value
-            }))
-          }
-
+          const label = ctx.handleLabelBaseValue(parent, html, item, value)
           // 可添加验证逻辑
           html.$el.remove()
-
           parent.innerHTML = label
         }
         // 针对 radio 和 checkbox 没有 blur 事件，监听 mouseout
@@ -250,21 +263,31 @@
           html.$on('blur', () => remove(this))
         }
       },
+      // 处理 type 和对应 item 项
+      handleTypeItem(target) {
+        let type = target.getAttribute('data-type')
+        if (!(type && editTypes.includes(type))) return {}
+
+        let props = {}
+        // 处理下拉项
+        if (optionsTypes.includes(type)) {
+          props = this.handleOptionProp(target)
+        }
+        if (type === 'timePick') {
+          type = this.handleTimePickType(target)
+        }
+        target.setAttribute('data-formattype', type)
+        const item = this.getTypeConfig(type, props)
+        return {
+          type,
+          item
+        }
+      },
       // 响应 edit 事件，主要出筛选 type 类型，渲染表单
       handleEdit(target) {
-        let type = target.getAttribute('data-type')
+        const { type, item } = this.handleTypeItem(target)
 
-        if (editTypes.includes(type)) {
-          let props = {}
-          // 处理下拉项
-          if (optionsTypes.includes(type)) {
-            props = this.handleOptionProp(target)
-          }
-          if (type === 'timePick') {
-            type = this.handleTimePickType(target)
-          }
-          const item = this.getTypeConfig(type, props)
-
+        if (type && item) {
           if (this.timer) {
             clearTimeout(this.timer)
           }

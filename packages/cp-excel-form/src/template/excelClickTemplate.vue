@@ -6,7 +6,9 @@
       content: {
         immediate: true,
         handler: function(val) {
-          this.htmlStr = val
+          if (val) {
+            this.htmlStr = val
+          }
         }
       }
     },

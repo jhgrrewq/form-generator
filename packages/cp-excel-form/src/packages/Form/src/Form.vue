@@ -51,6 +51,7 @@
     methods: {
       handleChange(item, e) {
         this.model[item.prop] = e
+        this.$emit('value-change', e)
       }
     }
   }

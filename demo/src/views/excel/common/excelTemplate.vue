@@ -11,12 +11,12 @@
   </div>
 </template>
 <script>
-  import { ExcelClickTemplate as ExcelTemplate } from 'packages/cp-excel-form'
-  // import { ExcelClickTemplate as ExcelTemplate }  from '@cci/cp-excel-form'
+  import * as ExcelTemplates from 'packages/cp-excel-form'
+  // import * as ExcelTemplates  from '@cci/cp-excel-form'
 
   export default {
     components: {
-      ExcelTemplate
+      ExcelTemplate: ExcelTemplates.ExcelClickTemplate
     },
     data() {
       return {
