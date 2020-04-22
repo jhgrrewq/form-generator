@@ -5,7 +5,7 @@
   export default {
     mixins: [MixinExcelTemplate],
     methods: {
-      /* getTemplate() {
+      getTemplate() {
         if (!this.id) return
         return axios({
           url: '/customer/reporting/getFormWriteById',
@@ -19,8 +19,8 @@
               return data.resultObject && data.resultObject.content || ''
             }
           })
-      }, */
-      getTemplate() {
+      },
+      /* getTemplate() {
         if (!this.id) return
         return axios({
           url: '/customer/reporting/getTmpToHtml',
@@ -34,7 +34,7 @@
               return data.resultObject || ''
             }
           })
-      },
+      }, */
       handleSave() {
         if (!this.id) return
         const template = this.$refs.excelTemplate
