@@ -114,6 +114,9 @@
           .then(validate => {
             return validate
           })
+          .catch(validate => {
+            return validate
+          })
       },
       clearValidate() {
         if (!this.htmlItems.length) return

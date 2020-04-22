@@ -1,11 +1,13 @@
 <template>
   <div class="wrap-container">
-    <c-button
-      class="btn-save"
-      type="primary"
-      @click="handleSave"
-    >
+    <c-button class="btn-save" type="primary" @click="handleSave">
       保存
+    </c-button>
+    <c-button class="btn-save" type="primary" @click="handleValidate">
+      校验
+    </c-button>
+    <c-button class="btn-save" type="primary" @click="handleClearValidate">
+      清除校验
     </c-button>
     <ExcelTemplate ref="excelTemplate" :content="content" />
   </div>
@@ -20,7 +22,33 @@
     },
     data() {
       return {
-        content: ''
+        content: '',
+        btnList: [
+          {
+            label: "保存",
+            methods: "handleSave",
+            url: "",
+            icon: "",
+            type: "primary",
+            disabled: false
+          },
+          {
+            label: "校验",
+            methods: "handleValidate",
+            url: "",
+            icon: "",
+            type: "primary",
+            disabled: false
+          },
+          {
+            label: "清除校验",
+            methods: "handleClearValidate",
+            url: "",
+            icon: "",
+            type: "primary",
+            disabled: false
+          }
+        ]
       }
     },
     computed: {
@@ -33,6 +61,11 @@
         .then((content) => {
           this.content = content
         })
+    },
+    methods: {
+      handleSave() {},
+      handleValidate() {},
+      handleClearValidate() {}
     }
   }
 </script>

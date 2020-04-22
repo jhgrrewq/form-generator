@@ -75,11 +75,11 @@
 <style lang="scss">
 .wrap-excel-form{
   .el-form-item{
-    margin-bottom: 0;
-    margin-right: 0;
-    .el-form-item__content{
+    /* margin-bottom: 0;
+    margin-right: 0; */
+    /* .el-form-item__content{
       line-height: 1;
-    }
+    } */
   }
 }
 </style>

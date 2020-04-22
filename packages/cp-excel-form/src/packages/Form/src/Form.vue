@@ -31,12 +31,12 @@
       ...baseComps
     },
     mixins: [Renderer],
-    props: {
+    /* props: {
       inline: {
         type: Boolean,
         default: false
       }
-    },
+    }, */
     beforeCreate() {
       this.R = this.R || {}
       componentList.forEach(name => {
