@@ -20,6 +20,7 @@
     "url": ""
   },
   "dependencies": {
+    "@cci/cp-form": "^1.0.12",
     "@cci/cui": "^1.2.8",
     "axios": "^0.19.2",
     "vue": "^2.6.11"

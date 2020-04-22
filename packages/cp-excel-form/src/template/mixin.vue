@@ -63,18 +63,18 @@
       }
 
       this.defaultItems = [
-        { prop: 'inputVal', placeholder: '请输入输入', xType: 'input', focus: true },
-        { prop: 'textareaVal', placeholder: '请输入输入', xType: 'input', type: 'textarea', focus: true },
-        { prop: 'selectVal', placeholder: '请输入输入', xType: 'select', focus: true },
-        { prop: 'radioVal', placeholder: '请输入输入', xType: 'radio', focus: true },
-        { prop: 'checkboxVal', placeholder: '请输入输入', xType: 'checkbox', focus: true },
-        { prop: 'yearVal', placeholder: '请输入输入', xType: 'SelectTime.year', focus: true },
-        { prop: 'monthVal', placeholder: '请输入输入', xType: 'SelectTime.month', focus: true },
-        { prop: 'weekVal', placeholder: '请输入输入', xType: 'SelectTime.week', focus: true },
-        { prop: 'dateVal', placeholder: '请输入输入', xType: 'SelectTime.date', focus: true },
-        { prop: 'datetimeVal', placeholder: '请输入输入', xType: 'SelectTime.datetime', focus: true }
-        // { prop: 'datetimerangeVal', placeholder: '请输入输入', xType: 'SelectTime.datetimerange', focus: true },
-        // { prop: 'daterange', placeholder: '请输入输入', xType: 'SelectTime.daterange', focus: true }
+        { prop: 'inputVal', placeholder: '请输入输入', xType: 'input', focus: true, anchor: 24 },
+        { prop: 'textareaVal', placeholder: '请输入输入', xType: 'input', type: 'textarea', focus: true, anchor: 24 },
+        { prop: 'selectVal', placeholder: '请输入输入', xType: 'select', focus: true, anchor: 24 },
+        { prop: 'radioVal', placeholder: '请输入输入', xType: 'radio', focus: true, anchor: 24 },
+        { prop: 'checkboxVal', placeholder: '请输入输入', xType: 'checkbox', focus: true, anchor: 24 },
+        { prop: 'yearVal', placeholder: '请输入输入', xType: 'SelectTime.year', focus: true, anchor: 24 },
+        { prop: 'monthVal', placeholder: '请输入输入', xType: 'SelectTime.month', focus: true, anchor: 24 },
+        { prop: 'weekVal', placeholder: '请输入输入', xType: 'SelectTime.week', focus: true, anchor: 24 },
+        { prop: 'dateVal', placeholder: '请输入输入', xType: 'SelectTime.date', focus: true, anchor: 24 },
+        { prop: 'datetimeVal', placeholder: '请输入输入', xType: 'SelectTime.datetime', focus: true, anchor: 24 }
+        // { prop: 'datetimerangeVal', placeholder: '请输入输入', xType: 'SelectTime.datetimerange', focus: true, anchor: 24 },
+        // { prop: 'daterange', placeholder: '请输入输入', xType: 'SelectTime.daterange', focus: true, anchor: 24 }
       ]
 
       this.items = this.defaultItems

@@ -1,31 +1,35 @@
 <script>
-  import Vue from 'vue'
-  // 全局注册 cui 组件
-  import {
-    Input, Switch
-  } from '@cci/cui'
-  import Checkbox from '../../Checkbox'
-  import Radio from '../../Radio'
-  import Select from '../../Select/SelectBase'
-
-  Vue.component('CInput', Input)
-  Vue.component('CSwitch', Switch)
-  Vue.component('CpCheckbox', Checkbox)
-  Vue.component('CpRadio', Radio)
-  Vue.component('CpSelect', Select)
-
-  // 注册表单组件
   import Renderer from "../../Renderer"
+  // @cci/cp-form 使用表单组件
+  import {
+    Input as CInput, Switch as CSwitch, FormItem as CFormItem, Row as CRow, Col as CCol
+  } from '@cci/cui'
+  import CpCheckbox from '../../Checkbox'
+  import CpRadio from '../../Radio'
+  import CpSelect from '../../Select/SelectBase'
+
+  const baseComps = {
+    CInput,
+    CSwitch,
+    CFormItem,
+    CRow,
+    CCol,
+    CpCheckbox,
+    CpRadio,
+    CpSelect
+  }
+  // 自定义表单组件
   import SelectTime from "../../Select/SelectTime"
-  const components = {
+  const comps = {
     SelectTime
   }
-  const componentList = Object.keys(components)
-  componentList.forEach(name => {
-    Vue.component(`C${name}`, components[name])
-  })
+  const componentList = Object.keys(comps)
 
   export default {
+    components: {
+      ...comps,
+      ...baseComps
+    },
     mixins: [Renderer],
     beforeCreate() {
       this.R = this.R || {}
@@ -47,12 +51,6 @@
           return [h(`C${name}`, opts)]
         }
       })
-    },
-    methods: {
-      handleChange(item, e) {
-        this.model[item.prop] = e
-        this.$emit('value-change', e)
-      }
     }
   }
 </script>
