@@ -16,11 +16,14 @@
     <c-table-column
       fixed="right"
       label="操作"
-      width="100"
+      width="200"
     >
       <template slot-scope="scope">
-        <c-button type="text" size="small" @click="handleEdit(scope.row)">
-          编辑
+        <c-button type="text" size="small" @click="handleClickModeEdit(scope.row)">
+          点击模式编辑
+        </c-button>
+        <c-button type="text" size="small" @click="handleAllModeEdit(scope.row)">
+          全部模式编辑
         </c-button>
       </template>
     </c-table-column>
@@ -51,8 +54,11 @@
         })
     },
     methods: {
-      handleEdit({ id }) {
+      handleClickModeEdit({ id }) {
         this.$router.push(`/excel/excelclick/edit/${id}`)
+      },
+      handleAllModeEdit({ id }) {
+        this.$router.push(`/excel/excelall/edit/${id}`)
       }
     }
   }

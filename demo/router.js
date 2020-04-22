@@ -3,21 +3,21 @@ const router = new Router({
   routes: [{
     name: 'index',
     path: '/',
-    redirect: '/excel/excelclick',
+    redirect: '/excel/excellist',
     chunkName: 'views/index',
     component: () => import("./src/Layout.vue"),
     children: [
       {
-        name: 'excelclick',
+        name: 'excellist',
         meta: {
           id: 0,
           pids: [],
           hideMenu: true,
           addTag: false
         },
-        path: '/excel/excelclick',
-        component: () => import("./src/views/excel/excelclick"),
-        chunkName: 'views/excel/excelclick'
+        path: '/excel/excellist',
+        component: () => import("./src/views/excel"),
+        chunkName: 'views/excel/excellist'
       },
       {
         name: 'excelclickedit',
@@ -42,18 +42,6 @@ const router = new Router({
         path: '/excel/excelclick/add/:id',
         component: () => import("./src/views/excel/excelclick/src/add"),
         chunkName: 'views/excel/excelclickadd'
-      },
-      {
-        name: 'excelall',
-        meta: {
-          id: 0,
-          pids: [],
-          hideMenu: true,
-          addTag: false
-        },
-        path: '/excel/excelall',
-        component: () => import("./src/views/excel/excelall"),
-        chunkName: 'views/excel/excelall'
       },
       {
         name: 'excelalledit',
