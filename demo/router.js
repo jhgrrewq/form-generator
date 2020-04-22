@@ -8,6 +8,18 @@ const router = new Router({
     component: () => import("./src/Layout.vue"),
     children: [
       {
+        name: 'word',
+        meta: {
+          id: 0,
+          pids: [],
+          hideMenu: true,
+          addTag: false
+        },
+        path: '/word',
+        component: () => import("./src/views/word"),
+        chunkName: 'views/word'
+      },
+      {
         name: 'excellist',
         meta: {
           id: 0,
