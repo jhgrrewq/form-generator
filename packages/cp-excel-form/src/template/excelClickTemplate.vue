@@ -23,12 +23,14 @@
     mounted() {
       // 外部可对 edit 事件做自定义处理
       !(this._event && this._event['edit']) && this.$on('edit', this.handleEdit)
+      // 外部 click
+      document.addEventListener('click', (e) => {
+        if (!this.$el.contains(e.target)) {
+          this.$el.focus()
+        }
+      }, false)
     },
     methods: {
-      // 获取 html
-      getHtmlStr() {
-        return this.$el && this.$el.innerHTML // 不能直接返回 htmlStr
-      },
       // 响应 edit 事件，主要出筛选 type 类型，渲染表单
       handleEdit(target) {
         const { type, item } = this.handleTypeItem(target)

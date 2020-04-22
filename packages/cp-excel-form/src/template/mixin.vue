@@ -82,6 +82,23 @@
       this.VueComp = Vue.extend(Comp)
     },
     methods: {
+      // 获取 html
+      getHtmlStr() {
+        const el = this.$el.cloneNode(true)
+        const tbody = el.getElementsByTagName('tbody')[0]
+        const elemelem = tbody.children
+        for (let i = 0; i < elemelem.length; i++) {
+          const e = elemelem[i]
+          if (e.children.length) {
+            Array.prototype.map.call(e.children, eItem => {
+              if (eItem.hasAttribute('data-type')) {
+                eItem.innerHTML = eItem.getAttribute('data-option-label') || ''
+              }
+            })
+          }
+        }
+        return el && el.innerHTML
+      },
       // 获取 json
       getJSON() {
         const json = []
