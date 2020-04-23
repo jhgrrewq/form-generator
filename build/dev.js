@@ -48,13 +48,13 @@ const service = new Service(path.resolve(__dirname, '../'), {
     chainWebpack,
     configureWebpack,
     devServer: {
-      /* proxy: {
+      proxy: {
         "/customer": {
           target: "http://10.10.112.65:8080"
         }
-      } */
+      },
       before(app) {
-        applyMock(app)
+        // applyMock(app)
       }
     }
   },

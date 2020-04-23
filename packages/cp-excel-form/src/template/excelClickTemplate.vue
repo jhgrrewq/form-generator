@@ -91,8 +91,8 @@
           parent.setAttribute('data-option-value', JSON.stringify({ optionValue: value }))
 
           // 可添加验证逻辑
-          /* html.$el.remove()
-          parent.innerHTML = label */
+          html.$el.remove()
+          parent.innerHTML = label
         }
         // 针对 radio 和 checkbox 没有 blur 事件，监听 mouseout
         if (nonBlurTypes.includes(item.xType)) {

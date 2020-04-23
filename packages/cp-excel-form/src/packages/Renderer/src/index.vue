@@ -30,7 +30,7 @@
                  {
                    staticClass: "el-form wrap-form wrap-excel-form",
                    class: {
-                     ['el-form--label-' + this.labelPosition]: this.labelPosition,
+                     //  ['el-form--label-' + this.labelPosition]: this.labelPosition,
                      'el-form--inline': this.inline
                    }
                  },
