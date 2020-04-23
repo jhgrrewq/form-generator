@@ -1,0 +1,86 @@
+{
+  "name": "@cci/cp-word-form",
+  "author": "jackzhang",
+  "version": "1.0.3",
+  "description": "word 表单编辑",
+  "main": "index.js",
+  "module": "index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "rollup -c --environment NODE_ENV:production"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "jest": "^24.5.0",
+    "rollup": "^2.6.1",
+    "vue-jest": "^4.0.0-beta.2"
+  },
+  "keywords": [],
+  "ccp": {
+    "config": {
+      "prop": {
+        "name": "ID",
+        "type": "string",
+        "default": "${autoIndex}"
+      },
+      "label": {
+        "name": "输入框Label",
+        "type": "string",
+        "default": "单行文本"
+      },
+      "size": {
+        "name": "字号",
+        "type": "number",
+        "default": 22,
+        "range": [
+          10,
+          100
+        ]
+      }
+    },
+    "api_data": {
+      "source": [
+        {
+          "value": "值"
+        }
+      ]
+    },
+    "event": {
+      "input": {
+        "name": "输入框输入"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://git.citycloud.com.cn:3000/hufei/ccp"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "vue-jest",
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@cci/cp-select)"
+    ]
+  },
+  "homepage": "https://git.citycloud.com.cn:3000/hufei/ccp/src/master/CHANGELOG.md",
+  "license": "ISC"
+}

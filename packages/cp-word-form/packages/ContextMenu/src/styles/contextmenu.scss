@@ -1,0 +1,75 @@
+@import './var.scss';
+.cp-contextmenu{
+  position: absolute;
+  padding: $padding-vertical 0;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px 0px $shadow-color;
+  list-style: none;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+  z-index: 2800;
+  -webkit-tap-highlight-color: transparent;
+  .cp-contextmenu-item{
+    padding: $padding-vertical $contextmenu-item-padding-horizonal;
+    line-height: 1;
+    color: #333;
+
+    &.cp-contextmenu-item--hover{
+      color: #fff;
+    }
+    &.cp-contextmenu-item--disabled{
+      color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+  .cp-contextmenu-divider{
+    height: 0;
+    margin: $padding-vertical 0;
+    border-bottom: 1px solid $border-color;
+  }
+  .cp-contextmenu-group__menus{
+    padding: 0 5px;
+    margin: 0;
+    list-style: none;
+    .cp-contextmenu-item{
+      display: inline-block;
+      padding: $padding-vertical ($contextmenu-item-padding-horizonal - 5);
+    }
+  }
+  .cp-contextmenu-submenu{
+    position: relative;
+    & > .cp-contextmenu{
+      position: absolute;
+      &.left{
+        left: 0;
+        transform: translateX(-100%);
+      }
+      &.right{
+        right: 0;
+        transform: translateX(100%);
+      }
+      &.top{
+        top: -($padding-vertical) - 1;
+      }
+      &.bottom{
+        bottom: -($padding-vertical) - 1;
+      }
+    }
+    .cp-contextmenu-submenu__title{
+      margin-right: $padding-vertical * 2;
+    }
+    .cp-contextmenu-submenu__icon{
+      position: absolute;
+      right: $padding-vertical;
+    }
+  }
+}
+.cp-contextmenu--default{
+  .cp-contextmenu-item--hover{
+    background-color: $active-color
+  }
+}
